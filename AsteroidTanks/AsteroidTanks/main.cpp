@@ -1,7 +1,8 @@
 #include "AsteroidTanksApp.h"
 
 int main() {
-	
+  	
+
 	// allocation
 	auto app = new AsteroidTanksApp();
 
