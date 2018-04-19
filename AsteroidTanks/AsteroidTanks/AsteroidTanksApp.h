@@ -17,6 +17,8 @@ public:
 
 protected:
 
+	float Timer;
+
 	aie::Renderer2D*	m_2dRenderer;
 	aie::Font*			m_font;
 };

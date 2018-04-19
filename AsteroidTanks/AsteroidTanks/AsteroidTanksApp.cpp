@@ -2,6 +2,8 @@
 #include "Texture.h"
 #include "Font.h"
 #include "Input.h"
+#include "Player.h"
+#include <imgui.h>
 
 AsteroidTanksApp::AsteroidTanksApp() {
 
@@ -18,7 +20,8 @@ bool AsteroidTanksApp::startup() {
 	// TODO: remember to change this when redistributing a build!
 	// the following path would be used instead: "./font/consolas.ttf"
 	m_font = new aie::Font("../bin/font/consolas.ttf", 32);
-
+	Timer = 0;
+	//player = new Player();
 	return true;
 }
 
@@ -30,6 +33,7 @@ void AsteroidTanksApp::shutdown() {
 
 void AsteroidTanksApp::update(float deltaTime) {
 
+	Timer = deltaTime;
 	// input example
 	aie::Input* input = aie::Input::getInstance();
 
@@ -62,7 +66,11 @@ void AsteroidTanksApp::draw() {
 
 	// begin drawing sprites
 	m_2dRenderer->begin();
-
+	ImGui::Begin("sample ");
+	ImGui::Text("Timer:  (%0.1F)", Timer);
+	static float defValue = 50;
+	ImGui::SliderFloat("test ", &defValue, 0.0f, 100.f, "%.1f");
+	ImGui::End();
 	// draw your stuff here!
 	
 	// output some text, uses the last used colour
