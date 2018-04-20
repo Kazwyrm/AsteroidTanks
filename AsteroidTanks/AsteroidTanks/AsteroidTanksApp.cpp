@@ -4,7 +4,7 @@
 #include "Input.h"
 #include "Player.h"
 #include <imgui.h>
-
+#include<string>
 
 
 
@@ -23,7 +23,8 @@ bool AsteroidTanksApp::startup() {
 	// TODO: remember to change this when redistributing a build!
 	// the following path would be used instead: "./font/consolas.ttf"
 	m_font = new aie::Font("../bin/font/consolas.ttf", 32);
-	Timer = 0;
+	Timer = 0.0f;
+	defValue = 100;
 
 	player = new Player(new glm::vec2(100, 200));
 	return true;
@@ -40,6 +41,10 @@ void AsteroidTanksApp::update(float deltaTime) {
 	Timer = deltaTime;
 	// input example
 	aie::Input* input = aie::Input::getInstance();
+	if (input->isKeyDown(aie::INPUT_KEY_SPACE) && defValue > 0)
+	{
+		defValue--;
+	}
 
 	player->Update(deltaTime, input);
 	// exit the application
@@ -54,16 +59,28 @@ void AsteroidTanksApp::draw() {
 
 	// begin drawing sprites
 	m_2dRenderer->begin();
-	ImGui::Begin("Timer");
+
+
+	ImGui::Begin("Player");
+	ImGui::Text("HP : ");
+	ImGui::ProgressBar(defValue/100.0f, ImVec2(250.0f, 20.0f));
+	
+	ImGui::End();
+
+	ImGui::Begin("Position");
 	ImGui::Text("Player X (%0.01F)", player->getPosX());
 	ImGui::Text("Player Y (%0.01F)", player->getPosY());
-	static float defValue = 3;
-	ImGui::SliderFloat("Health", &defValue, 0.0f, 3.f, "%.1f");
+	ImGui::End();
+
+	ImGui::Begin("menu");
+
+	ImGui::Text("Press ESC to exit");
+
 	ImGui::End();
 	// draw your stuff here!
 	player->Draw(m_2dRenderer);
 	// output some text, uses the last used colour
-	m_2dRenderer->drawText(m_font, "Press ESC to quit", 0, 0);
+
 
 	// done drawing sprites
 	m_2dRenderer->end();

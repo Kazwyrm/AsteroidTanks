@@ -20,7 +20,7 @@ public:
 protected:
 
 	float Timer;
-
+	float defValue;
 	aie::Renderer2D*	m_2dRenderer;
 	aie::Font*			m_font;
 	Player*				player;
