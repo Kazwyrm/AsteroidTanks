@@ -3,9 +3,10 @@
 #include "Font.h"
 #include "Input.h"
 #include "Player.h"
+#include "Asteroids.h"
 #include <imgui.h>
-#include<string>
-
+#include <string>
+#include <random>
 
 
 AsteroidTanksApp::AsteroidTanksApp() {
@@ -14,6 +15,16 @@ AsteroidTanksApp::AsteroidTanksApp() {
 
 AsteroidTanksApp::~AsteroidTanksApp() {
 
+}
+
+int AsteroidTanksApp::randomNum(int min, int max)
+{
+	std::mt19937 rng;
+	rng.seed(std::random_device()());
+	std::uniform_int_distribution<int>dist10(min, max);
+
+	int ranNum = dist10(rng);
+	return ranNum;
 }
 
 bool AsteroidTanksApp::startup() {
@@ -26,7 +37,9 @@ bool AsteroidTanksApp::startup() {
 	Timer = 0.0f;
 	defValue = 100;
 
-	player = new Player(new glm::vec2(100, 200));
+	randnum = randomNum(100.0f, 1500.0f);
+	player = new Player(new glm::vec2(800, 200));
+	asteroid = new Asteroids(new glm::vec2(randnum, 900.0f));
 	return true;
 }
 
@@ -41,12 +54,14 @@ void AsteroidTanksApp::update(float deltaTime) {
 	Timer = deltaTime;
 	// input example
 	aie::Input* input = aie::Input::getInstance();
-	if (input->isKeyDown(aie::INPUT_KEY_SPACE) && defValue > 0)
+	if (asteroid->IsCollision(asteroid->getPosX(), asteroid->getPosY(), player->getPosX(), player->getPosY()) == true && defValue >= 0)
 	{
 		defValue--;
 	}
 
 	player->Update(deltaTime, input);
+	asteroid->Update(deltaTime);
+
 	// exit the application
 	if (input->isKeyDown(aie::INPUT_KEY_ESCAPE))
 		quit();
@@ -67,18 +82,23 @@ void AsteroidTanksApp::draw() {
 	
 	ImGui::End();
 
-	ImGui::Begin("Position");
+	
+	ImGui::Begin("Menu");
+	ImGui::Text("Position :");
 	ImGui::Text("Player X (%0.01F)", player->getPosX());
 	ImGui::Text("Player Y (%0.01F)", player->getPosY());
+
+	ImGui::Text("Ast Pos :");
+	ImGui::Text("Player X (%0.01F)", asteroid->getPosX());
+	ImGui::Text("Player Y (%0.01F)", asteroid->getPosY());
+
+	ImGui::Text("\nPress ESC to exit");
 	ImGui::End();
 
-	ImGui::Begin("menu");
 
-	ImGui::Text("Press ESC to exit");
-
-	ImGui::End();
 	// draw your stuff here!
 	player->Draw(m_2dRenderer);
+	asteroid->Draw(m_2dRenderer);
 	// output some text, uses the last used colour
 
 
