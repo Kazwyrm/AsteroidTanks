@@ -1,0 +1,12 @@
+﻿  Asteroids.cpp
+  AsteroidTanksApp.cpp
+AsteroidTanksApp.cpp(40): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+AsteroidTanksApp.cpp(40): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  Bullets.cpp
+  main.cpp
+  Player.cpp
+  Generating code
+  All 1774 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  AsteroidTanks.vcxproj -> C:\Users\Tim's PC\Desktop\Assessment 2\trunk\AsteroidTanks\temp\AsteroidTanks\Win32\Release\AsteroidTanks.exe
+  AsteroidTanks.vcxproj -> C:\Users\Tim's PC\Desktop\Assessment 2\trunk\AsteroidTanks\temp\AsteroidTanks\Win32\Release\AsteroidTanks.pdb (Full PDB)
